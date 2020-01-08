@@ -1,0 +1,15 @@
+useful urls (ctrl click to open browser)
+
+Data structure stuff:
+
+https://rust-unofficial.github.io/too-many-lists/
+
+Language stuff:
+
+https://blog.subnetzero.io/post/building-language-vm-part-01/
+http://craftinginterpreters.com/
+https://hackernoon.com/lets-build-a-programming-language-2612349105c6
+https://doc.rust-lang.org/1.0.0/syntax/
+https://ruslanspivak.com/lsbasi-part1/
+
+and the compiler book in ~/Downloads/...
