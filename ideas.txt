@@ -1,0 +1,6 @@
+mathy syntax
+
+let z = 10
+let f(x) = x + 2 // expr or stmt
+let y = f(z)
+
