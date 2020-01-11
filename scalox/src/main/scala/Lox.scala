@@ -1,8 +1,10 @@
-package example
+package scalox
 
 import scala.io.Source
 
 object Lox {
+  // Not really idiomatic Scala, but I'm following a guide
+  var hadError = false
 
   // Main method. Kicks things off.
   def main(args: Array[String]): Unit = {
@@ -19,7 +21,8 @@ object Lox {
   def runFile(path: String): Unit = {
     try {
       val f = Source.fromFile(path)
-      run(f.toString)
+      run(f.mkString)
+      if (hadError) System.exit(65)
     } catch {
       // probable case
       case e: java.io.FileNotFoundException =>{
@@ -41,13 +44,23 @@ object Lox {
       print("> ")
       val in = stdin.readLine
       run(in)
+      hadError = false
       inner
     }
     inner
   }
 
+  // Handler for compilation error messages
+  def error(line: Int , message: String, where: String = ""): Unit = {
+    println(s"[line $line] Error $where: $message")
+    hadError = true
+  }
+
   // The core function that facilitates code evaluation
   def run(source: String): Unit = {
-        println("Code running unimplemented")
+    val tokens: List[Token] = (new Scanner(source)).scanTokens.reverse
+
+    tokens.foreach((x: Token) => println(x.toString))
   }
 }
+
