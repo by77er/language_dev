@@ -59,7 +59,7 @@ class Scanner(val source: String) {
       case '!' => addToken(if (matchChar('=')) BANG_EQUAL else BANG)
       case '=' => addToken(if (matchChar('=')) EQUAL_EQUAL else EQUAL)
       case '<' => addToken(if (matchChar('=')) LESS_EQUAL else LESS)
-      case '>' => addToken(if (matchChar('=')) GREATER_EQUAL else LESS_EQUAL)
+      case '>' => addToken(if (matchChar('=')) GREATER_EQUAL else GREATER)
       // Distinguish division from comments
       case '/' => if (matchChar('/')) {
         while (peek != '\n' && !isAtEnd) advance
@@ -121,7 +121,7 @@ class Scanner(val source: String) {
     }
 
     // report missing terminator
-    if (isAtEnd) Lox.error(line, "Unterminated string.")
+    if (isAtEnd) return Lox.error(line, "Unterminated string.")
 
     // eat terminator
     advance

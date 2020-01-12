@@ -5,6 +5,8 @@ import scala.io.Source
 object Lox {
   // Not really idiomatic Scala, but I'm following a guide
   var hadError = false
+  var hadRuntimeError = false
+  val interpreter = new Interpreter()
 
   // Main method. Kicks things off.
   def main(args: Array[String]): Unit = {
@@ -23,6 +25,7 @@ object Lox {
       val f = Source.fromFile(path)
       run(f.mkString)
       if (hadError) System.exit(65)
+      if (hadRuntimeError) System.exit(70); 
     } catch {
       // probable case
       case e: java.io.FileNotFoundException =>{
@@ -56,11 +59,27 @@ object Lox {
     hadError = true
   }
 
+  def error(token: Token, message: String) {
+    if (token.kind == TokenType.EOF) {
+      error(token.line, message, "at end")
+    } else {
+      error(token.line, message, s"at '${token.lexeme}'")
+    }
+  }
+
+  def runtimeError(e: RuntimeError): Unit = {
+    println(s"[line ${e.token.line}] Error: ${e.message}")
+    hadRuntimeError = true
+  }
+
   // The core function that facilitates code evaluation
   def run(source: String): Unit = {
     val tokens: List[Token] = (new Scanner(source)).scanTokens.reverse
+    val expression: Expr = (new Parser(tokens)).parse
 
-    tokens.foreach((x: Token) => println(x.toString))
+    if (hadError) return;
+
+    interpreter.interpret(expression)
   }
 }
 

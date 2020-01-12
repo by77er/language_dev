@@ -1,5 +1,1 @@
-// this is a comment
-(( )){} // grouping stuff
-!*+-/=<> <= == // operators
-
-"hello" 25.4 3 434554.1 var yeah
+"hello" + 2 * 3 == "hello6" // comment

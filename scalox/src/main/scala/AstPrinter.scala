@@ -5,6 +5,9 @@ package scalox
 object AstPrinter {
   def print(e: Expr): String = e match {
     case Binary(l, op, r) => parens(op.lexeme, l, r)
+    case Unary(op, r) => parens(op.lexeme, r)
+    case Literal(v) => s"$v"
+    case Grouping(e) => s"(${print(e)})"
     case _ => "unimplemented"
   }
 
